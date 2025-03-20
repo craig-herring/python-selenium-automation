@@ -22,8 +22,25 @@ driver.find_element(By.ID, 'nav-search-submit-button')
 #By XPATH
 driver.find_element(By.XPATH, "//input[@aria-label='Search Amazon']")
 driver.find_element(By.XPATH,"//input[@role='searchbox']")
+driver.find_element(By.XPATH, "//input[@placeholder='Search Amazon']")
+
+#By XPATH (multiple attributes)
+driver.find_element(By.XPATH, "//input[@tabindex='0' and @name='field-keywords']")
+
+#By XPATH (without a tag, or any tag)
 driver.find_element(By.XPATH, "//*[@aria-label='Search Amazon']")
+
+#By XPATH (using text)
 driver.find_element(By.XPATH, "//a[text()='Best Sellers']")
+driver.find_element(By.XPATH, "//h2[contains(text(), 'Luxury')]")
+
+
+
+
+
+
+
+
 
 
 
