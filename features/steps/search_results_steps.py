@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from behave import given, when, then
 from time import sleep
 
@@ -11,13 +12,23 @@ SIDE_NAV_ADD_TO_CART_BTN = (By.CSS_SELECTOR, "[data-test='content-wrapper'] [id*
 
 @when('Click on Add to Cart button')
 def click_add_to_cart(context):
-    context.driver.find_element(*ADD_TO_CART_BTN).click() #clicks on first item
-    sleep(3)
+    context.driver.find_element(*ADD_TO_CART_BTN).click()  # always clicks on 1st Add to cart btn
+
+
+@when('Store product name')
+def store_product_name(context):
+    context.driver.wait.until(
+        EC.visibility_of_element_located(SIDE_NAV_PRODUCT_NAME),
+        message='Product name not visible'
+    )
+    context.product_name = context.driver.find_element(*SIDE_NAV_PRODUCT_NAME).text
+    print('Product name stored: ', context.product_name)
+
 
 @when('Confirm Add to Cart button from side navigation')
 def side_nav_click_add_to_cart(context):
     context.driver.find_element(*SIDE_NAV_ADD_TO_CART_BTN).click()
-    sleep (3)
+    sleep(5)
 
 
 @then('Verify correct search results shown for {expected_text}')
