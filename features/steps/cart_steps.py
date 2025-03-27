@@ -24,9 +24,6 @@ def verify_cart_items(context, amount):
     cart_summary = context.driver.find_element(*CART_SUMMARY).text
     assert f'{amount} item' in cart_summary, f"Expected {amount} items but got {cart_summary}"
 
-
 @then("Verify 'Your cart is empty' message is shown")
 def verify_cart_empty(context):
-    expected_result = 'Your cart is empty'
-    actual_result = context.driver.find_element(By.CSS_SELECTOR, "[data-test='boxEmptyMsg']").text
-    assert expected_result == actual_result, f'Expected {expected_result} did not match actual {actual_result}'
+    context.app.cart_page.verify_cart_empty()

@@ -5,37 +5,33 @@ from time import sleep
 
 
 SEARCH_FIELD = (By.ID, 'search')
-SEARCH_BTN = (By.XPATH, "//button[@data-test='@web/Search/SearchButton']")
-CART_ICON = (By.CSS_SELECTOR, "[data-test='@web/CartLink']")
 HEADER_LINKS = (By.CSS_SELECTOR, "[id*='utilityNav']")
-TARGET_CIRCLE = (By.CSS_SELECTOR, "[id*='utilityNav-circle']")
-BENEFIT_CELLS = (By.CSS_SELECTOR, "[data-test='@web/slingshot-components/CellsComponent/Link']")
 
 
-@given('Open Target main page')
+@given('Open target main page')
 def open_target_main(context):
-    context.driver.get('https://www.Target.com/')
+    context.app.main_page.open_main_page()
+    context.driver.wait.until(
+        EC.element_to_be_clickable(SEARCH_FIELD),
+        message='Search field not clickable'
+    )
 
 
 @when('Search for {search_word}')
 def search_product(context, search_word):
-    context.driver.find_element(*SEARCH_FIELD).send_keys(search_word)
-    context.driver.find_element(*SEARCH_BTN).click()
-    sleep(5)
+    context.app.header.search(search_word)
+
 
 @when('Click on Cart icon')
-def click_cart_icon(context):
-    context.driver.find_element(*CART_ICON).click()
+def click_cart(context):
+    context.app.header.click_cart()
 
-@when('Open Target Circle page')
-def click_circle_icon(context):
-    context.driver.find_element(*TARGET_CIRCLE).click()
-    sleep(3)
 
 @then('Verify at least 1 link shown')
 def verify_1_header_link_shown(context):
     link = context.driver.find_element(*HEADER_LINKS)
     print(link)
+
 
 @then('Verify {link_amount} links shown')
 def verify_all_header_links_shown(context, link_amount):
@@ -43,6 +39,7 @@ def verify_all_header_links_shown(context, link_amount):
     links = context.driver.find_elements(*HEADER_LINKS)
     print(links)
     assert len(links) == link_amount, f'Expected {link_amount} links, but got {len(links)}'
+
 
 @then('Verify that there are at least 10 benefit cells')
 def verify_at_least_10_benefit_cells(context):
