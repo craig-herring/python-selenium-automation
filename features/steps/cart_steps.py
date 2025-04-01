@@ -19,11 +19,18 @@ def verify_product_name(context):
         f'Expected {context.product_name[:20]} did not match {product_name_in_cart[:20]}'
 
 
+
 @then('Verify cart has {amount} item(s)')
 def verify_cart_items(context, amount):
     cart_summary = context.driver.find_element(*CART_SUMMARY).text
     assert f'{amount} item' in cart_summary, f"Expected {amount} items but got {cart_summary}"
 
+
 @then("Verify 'Your cart is empty' message is shown")
 def verify_cart_empty(context):
     context.app.cart_page.verify_cart_empty()
+
+
+@then('Verify cart page opens')
+def verify_cart_page_opens(context):
+    context.app.cart_page.verify_cart_page_opens()

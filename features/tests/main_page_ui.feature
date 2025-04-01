@@ -8,3 +8,9 @@ Feature: Main page UI test
   Scenario: Verify all header links shown
     Given Open Target main page
     Then Verify 6 links shown
+
+  Scenario: Verify that logged out user can access Sign In
+    Given Open Target main page
+    When Click Sign In
+    When From right side navigation menu, click Sign In
+    Then Verify Sign In form opened

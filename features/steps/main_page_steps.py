@@ -4,17 +4,29 @@ from behave import given, when, then
 from time import sleep
 
 
-SEARCH_FIELD = (By.ID, 'search')
 HEADER_LINKS = (By.CSS_SELECTOR, "[id*='utilityNav']")
 
 
 @given('Open target main page')
 def open_target_main(context):
     context.app.main_page.open_main_page()
-    context.driver.wait.until(
-        EC.element_to_be_clickable(SEARCH_FIELD),
-        message='Search field not clickable'
-    )
+
+
+@when('Click Sign In')
+def click_sign_in(context):
+    context.app.header.click_sign_in()
+    sleep(1)
+
+
+@when('From right side navigation menu, click Sign In')
+def side_nav_click_sign_in(context):
+    context.app.header.side_nav_click_sign_in()
+    sleep(4)
+
+
+@then('Verify Sign In form opened')
+def verify_Sign_In_page_opens(context):
+    context.app.main_page.verify_Sign_In_form_opens()
 
 
 @when('Search for {search_word}')
@@ -31,6 +43,12 @@ def click_cart(context):
 def verify_1_header_link_shown(context):
     link = context.driver.find_element(*HEADER_LINKS)
     print(link)
+    # Stale Element Reference Ex
+    # print("Before refresh:", link)
+    # context.driver.refresh()
+    # link = context.driver.find_element(*HEADER_LINKS)
+    # link.click()
+    # print("AFTER refresh:", link)
 
 
 @then('Verify {link_amount} links shown')
