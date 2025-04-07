@@ -12,6 +12,11 @@ def open_target_main(context):
     context.app.main_page.open_main_page()
 
 
+@given('Open sign in page')
+def click_sign_in(context):
+    context.app.header.click_sign_in()
+    sleep(1)
+
 @when('Click Sign In')
 def click_sign_in(context):
     context.app.header.click_sign_in()
@@ -58,9 +63,4 @@ def verify_all_header_links_shown(context, link_amount):
     print(links)
     assert len(links) == link_amount, f'Expected {link_amount} links, but got {len(links)}'
 
-
-@then('Verify that there are at least 10 benefit cells')
-def verify_at_least_10_benefit_cells(context):
-    links = context.driver.find_elements(*BENEFIT_CELLS)
-    print(links)
 

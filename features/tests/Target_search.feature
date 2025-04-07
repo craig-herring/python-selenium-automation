@@ -28,5 +28,9 @@ Feature: Target search test cases
     |dress          |
     |jacket         |
 
-
+  Scenario: User can see favorites tooltip for search results
+    Given Open Target main page
+    When Search for tea
+    And Hover favorites icon
+    Then Favorites tooltip is shown
 
